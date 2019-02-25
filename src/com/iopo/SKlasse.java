@@ -24,10 +24,7 @@ public class SKlasse extends Mercedes {
     public double drive(double number, int rev) {
         this.numberOfKM += number;
         System.out.println("drives " + number + " KMs, " + rev + " rpm.");
-        double consumption = (consumptionPer100Km * number) / 100;
-        double availableFuel = this.getAvailableFuel() - consumption;
-        super.setAvailableFuel(availableFuel);
-        System.out.println("The average fuel consumption is: " + df.format(this.getAverageFuelConsumption(availableFuel, rev)));
+        System.out.println("The average fuel consumption is: " + df.format(this.getAverageFuelConsumption(showAvailableFuel(number), rev)));
         return this.numberOfKM;
     }
 
@@ -51,6 +48,14 @@ public class SKlasse extends Mercedes {
         }
     }
 
+    public double showAvailableFuel (double numberOfKm) {
+
+        double consumption = (consumptionPer100Km * numberOfKm) / 100;
+        double availableFuel = this.getAvailableFuel() - consumption;
+        super.setAvailableFuel(availableFuel);
+        return availableFuel;
+    }
+
     public double getInitialFuel() {
         return initialFuel;
     }
@@ -70,6 +75,4 @@ public class SKlasse extends Mercedes {
     public static int getGears() {
         return gears;
     }
-
-
 }
