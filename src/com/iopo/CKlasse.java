@@ -1,12 +1,9 @@
 package com.iopo;
 
-import java.text.DecimalFormat;
 
 public class CKlasse extends Mercedes {
 
-    DecimalFormat df = new DecimalFormat("###.##");
-	
-	private static final double fuelTankSize = 55.00;
+    private static final double fuelTankSize = 55.00;
     private static final String fuelType = "DIESEL";
     private static final int gears = 6;
     private static final float consumptionPer100Km = 6.5f;
@@ -24,13 +21,16 @@ public class CKlasse extends Mercedes {
     public double drive(double number, int rev) {
         this.numberOfKM += number;
         System.out.println("drives " + number + " KMs, " + rev + " rpm.");
-        System.out.println("The average fuel consumption is: " + df.format(this.getAverageFuelConsumption(showAvailableFuel(number), rev)));
-        return this.numberOfKM;
+        return getAverageFuelConsumption(showRemainingFuel(number), rev);
     }
 
     @Override
+    public void resetFuelConsumption(float consumption){
+        System.out.println("Average consumption has been reset to " + consumption);
+    }
+
     public double getAverageFuelConsumption(double availableFuel, int rev){
-        double fuelRemained = this.getInitialFuel() - super.getAvailableFuel();
+        double fuelRemained = this.getInitialFuel() - availableFuel;
         double avgConsumption = (fuelRemained * 100) / this.numberOfKM;
 
         if ((rev > 3000) && (rev <= 4000)) {
@@ -48,9 +48,9 @@ public class CKlasse extends Mercedes {
         }
     }
 
-    public double showAvailableFuel (double numberOfKm) {
+    private double showRemainingFuel(double numberKm) {
 
-        double consumption = (consumptionPer100Km * numberOfKm) / 100;
+        double consumption = (consumptionPer100Km * numberKm) / 100;
         double availableFuel = this.getAvailableFuel() - consumption;
         super.setAvailableFuel(availableFuel);
         return availableFuel;
