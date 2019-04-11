@@ -98,13 +98,17 @@ public abstract class Mercedes extends Car {
 
 	@Override
 	public int shiftGear(int gear) {
-		if (gear > 6) {
+		if ((gear < 0) || (gear > 6)) {
 			System.out.println("Invalid value!");
 			this.stop();
 			return -1;
+		} else if (gear == 0) {
+			System.out.println("The car has stopped!");
+			this.stop();
 		}
-		System.out.println("Drives in " + gear + " gear");
-		return gear;
+			System.out.println("Drives in " + gear + " gear");
+			return gear;
+
 	}
 
 	private double showRemainingFuel(double numberKm) {
